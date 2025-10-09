@@ -1,0 +1,1 @@
+"""Bidder FastAPI application package."""
