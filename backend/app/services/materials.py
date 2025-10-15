@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import logging
+from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -11,6 +12,7 @@ import httpx
 logger = logging.getLogger(__name__)
 
 BASELINE_PATH = Path(__file__).resolve().parent.parent / "data" / "material_baseline.json"
+DEFAULT_MATERIAL_PRICE = 15.0
 
 
 async def search_material_price(query: str) -> Optional[float]:
@@ -36,6 +38,7 @@ async def search_material_price(query: str) -> Optional[float]:
     return float(price) if price else None
 
 
+@lru_cache(maxsize=1)
 def load_baseline_prices() -> Dict[str, float]:
     """Load offline fallback pricing."""
 
@@ -53,9 +56,18 @@ async def resolve_material_costs(materials: List[str]) -> Dict[str, float]:
     costs: Dict[str, float] = {}
 
     for material in materials:
-        price = await search_material_price(material)
+        normalized_name = material.strip()
+        if not normalized_name:
+            continue
+
+        lookup_key = normalized_name.lower()
+        if lookup_key in costs:
+            continue
+
+        price = await search_material_price(normalized_name)
         if price is None:
-            price = baselines.get(material.lower(), baselines.get(material, 0.0))
-        costs[material] = float(price)
+            price = baselines.get(lookup_key, baselines.get(normalized_name, DEFAULT_MATERIAL_PRICE))
+
+        costs[normalized_name] = float(price)
 
     return costs
