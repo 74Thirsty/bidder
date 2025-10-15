@@ -1,6 +1,7 @@
 """Database models for job bids."""
 from __future__ import annotations
 
+"""Database models backing the Bidder API."""
 from datetime import datetime
 from typing import List, Optional
 
@@ -27,7 +28,14 @@ class Job(SQLModel, table=True):
     labor: dict = Field(sa_column=Column(JSON), default_factory=dict)
     overhead: float
     profit_margin: float
+    profit_amount: float
+    material_total: float
+    labor_total: float
+    weather_modifier: float
     total_bid: float
+    cost_breakdown: dict = Field(sa_column=Column(JSON), default_factory=dict)
+    metrics: dict = Field(sa_column=Column(JSON), default_factory=dict)
+    location_details: dict = Field(sa_column=Column(JSON), default_factory=dict)
     steps: List[str] = Field(sa_column=Column(JSON), default_factory=list)
     timestamp: datetime = Field(default_factory=datetime.utcnow, alias="_timestamp")
 

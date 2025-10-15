@@ -24,10 +24,14 @@ async def geocode_location(location: str) -> Optional[Dict[str, float]]:
     }
     headers = {"User-Agent": "Bidder/1.0 (https://example.com)"}
 
-    async with httpx.AsyncClient(timeout=20) as client:
-        response = await client.get(url, params=params, headers=headers)
-        response.raise_for_status()
-        data = response.json()
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            response = await client.get(url, params=params, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+    except httpx.HTTPError as exc:
+        logger.warning("Geocoding lookup failed for '%s': %s", location, exc)
+        return None
 
     if not data:
         logger.warning("No geocoding results for location '%s'", location)

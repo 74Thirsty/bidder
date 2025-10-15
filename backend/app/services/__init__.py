@@ -1,7 +1,8 @@
 """Service layer exports."""
-from . import geocoding, instructions, labor, materials, weather
+from . import analytics, geocoding, instructions, labor, materials, weather
 
 __all__ = [
+    "analytics",
     "geocoding",
     "instructions",
     "labor",

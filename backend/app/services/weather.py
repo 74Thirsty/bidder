@@ -19,10 +19,13 @@ async def fetch_weather_modifier(lat: float, lon: float) -> Optional[float]:
     url = "https://api.openweathermap.org/data/2.5/weather"
     params = {"lat": lat, "lon": lon, "appid": settings.openweather_api_key, "units": "imperial"}
 
-    async with httpx.AsyncClient(timeout=20) as client:
-        response = await client.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            response = await client.get(url, params=params)
+            response.raise_for_status()
+            data = response.json()
+    except httpx.HTTPError:
+        return None
 
     main = data.get("main", {})
     temperature = main.get("temp")
