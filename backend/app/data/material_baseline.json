@@ -2,7 +2,15 @@
   "concrete mix": 5.25,
   "rebar": 0.85,
   "gravel": 0.12,
-  "plywood": 18.50,
+  "plywood": 18.5,
   "electrical wire": 0.45,
-  "copper pipe": 2.10
+  "copper pipe": 2.1,
+  "breaker panel": 180.0,
+  "pvc pipe": 1.25,
+  "ductwork": 5.1,
+  "thermostat": 95.0,
+  "heat pump": 1850.0,
+  "sprinkler head": 12.5,
+  "landscape fabric": 0.32,
+  "garden soil": 0.08
 }

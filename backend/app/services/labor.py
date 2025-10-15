@@ -1,4 +1,4 @@
-"""Labor rate helpers using BLS public datasets."""
+"""Labor rate utilities leveraging public data."""
 from __future__ import annotations
 
 import logging
@@ -28,10 +28,14 @@ async def fetch_bls_labor_rate(occupation_code: str, state: Optional[str]) -> Op
     if settings.bls_api_key:
         payload["registrationkey"] = settings.bls_api_key
 
-    async with httpx.AsyncClient(timeout=20) as client:
-        response = await client.post(url, json=payload, headers=headers)
-        response.raise_for_status()
-        data = response.json()
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            response = await client.post(url, json=payload, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+    except httpx.HTTPError as exc:
+        logger.warning("BLS labor lookup failed for %s: %s", occupation_code, exc)
+        return None
 
     series = data.get("Results", {}).get("series", [])
     if not series:
