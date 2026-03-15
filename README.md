@@ -1,5 +1,8 @@
 # bidder
 
+[![Copilot_20260314_193330_removebg_preview_(1).png](https://i.postimg.cc/MZPzgZ1b/Copilot_20260314_193330_removebg_preview_(1).png)](https://postimg.cc/0rSgwsWb)
+
+
 **bidder** is a web application that implements a bidding / auction system. It consists of a frontend UI and a backend server, interacting to conduct auctions among multiple bidders.
 
 ---
