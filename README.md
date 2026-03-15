@@ -6,7 +6,7 @@
   </a>
 </div>
 
-**bidder** is a web application that implements a bidding / auction system. It consists of a frontend UI and a backend server, interacting to conduct auctions among multiple bidders.
+**Bidder** is a web application that implements a bidding / auction system. It consists of a frontend UI and a backend server, interacting to conduct auctions among multiple bidders.
 
 ---
 
