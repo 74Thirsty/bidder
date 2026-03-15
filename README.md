@@ -1,4 +1,4 @@
-# bidder
+# **Bidder**
 
 <div align="center">
   <a href="https://postimg.cc/ZWjNJXpj">
